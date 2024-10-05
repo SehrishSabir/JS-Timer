@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer Example</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.timer {
+  text-align: center;
+}
+
+#display {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+button {
+  font-size: 1em;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  color:black;
+  background-color: coral;
+  border: 2px solid black;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<div class="timer">
+  <div id="display">00:00:00</div>
+  <button id="startStopBtn">Start</button>
+  <!--<button id="resetBtn">Reset</button>-->
+</div>
+<script>
+    let timer;
+let isRunning = false;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+function startStop() {
+  if (isRunning) {
+    clearInterval(timer);
+    document.getElementById('startStopBtn').innerText = 'Start';
+    isRunning = false;
+  } else {
+    timer = setInterval(updateTime, 1000);
+    document.getElementById('startStopBtn').innerText = 'Stop';
+    isRunning = true;
+  }
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  document.getElementById('startStopBtn').innerText = 'Start';
+  isRunning = false;
+  seconds = 0;
+  minutes = 0;
+  hours = 0;
+  updateTime();
+}
+
+function updateTime() {
+  seconds++;
+  if (seconds >= 60) {
+    seconds = 0;
+    minutes++;
+    if (minutes >= 60) {
+      minutes = 0;
+      hours++;
+    }
+  }
+
+  const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  document.getElementById('display').innerText = display;
+}
+
+document.getElementById('startStopBtn').addEventListener('click', startStop);
+document.getElementById('resetBtn').addEventListener('click', resetTimer);
+
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
